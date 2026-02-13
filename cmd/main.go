@@ -46,8 +46,13 @@ func main() {
 	app.Use(recover.New())
 
 	// CORS configuration
+	allowedOrigins := config.Get("ALLOWED_ORIGINS")
+	if allowedOrigins == "" {
+		allowedOrigins = "https://frontend-laundry-production.up.railway.app, http://localhost:5173, http://localhost:5174"
+	}
+
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "*", // In production, replace with your specific domain
+		AllowOrigins:     allowedOrigins,
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowMethods:     "GET, POST, PUT, DELETE, OPTIONS",
 		AllowCredentials: true,
