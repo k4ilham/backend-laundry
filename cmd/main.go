@@ -45,8 +45,13 @@ func main() {
 	// Panic Recovery
 	app.Use(recover.New())
 
-	// CORS
-	app.Use(cors.New())
+	// CORS configuration
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "*", // In production, replace with your specific domain
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowMethods:     "GET, POST, PUT, DELETE, OPTIONS",
+		AllowCredentials: true,
+	}))
 
 	// Rate Limiting
 	app.Use(limiter.New(limiter.Config{
